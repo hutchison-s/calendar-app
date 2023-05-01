@@ -6,9 +6,14 @@
   --caramel: #ce8147ff;
   --magnolia: #f8f2f7ff;
 }
+* {
+  box-sizing: border-box;
+}
 body {
   background: var(--magnolia);
+  position: relative;
 }
+
 .App {
   font-family: sans-serif;
   text-align: center;
@@ -32,6 +37,19 @@ body {
   font-size: 32px;
   color: white;
 }
+#todayList {
+  position: absolute;
+  top: 20%;
+  left: 2vw;
+  width: 20vw;
+  height: 200px;
+  z-index: 3;
+}
+#todayList .bigList {
+  position: absolute;
+  width: 100%;
+  font-size: x-small;
+}
 .weekdays {
   background: var(--light-green);
   color: black;
@@ -49,20 +67,19 @@ body {
 }
 .blankDay {
   position: relative;
-  background: white;
-  /* border: 1px solid grey; */
+  background: rgba(18, 94, 145, 0.2);
   width: 100%;
   height: 100%;
 }
 .day {
   position: relative;
-  /* border: 1px solid grey; */
   aspect-ratio: 1;
   text-align: right;
   padding: 4px;
   transition: all 0.3s;
   overflow: hidden;
   background: white;
+  cursor: pointer;
 }
 .day:hover {
   background: var(--hover-green);
@@ -108,22 +125,37 @@ body {
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  /* gap: 10px; */
+  /* padding: 10px; */
 }
 .bigListItem {
-  display: block;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
   border-radius: 0.5rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   background: var(--ultra-violet);
   color: white;
-  cursor: pointer;
   user-select: none;
+  margin: 5px 0 0 0;
+}
+.bigListItem * {
   margin: 0;
 }
 .bigListItem:hover {
-  filter: opacity(0.8);
+  filter: opacity(0.95);
+}
+
+.bigListItemTools {
+  display: flex;
+  gap: 20px;
+  padding: 5px 10px;
+  align-items: center;
+}
+#modalDate {
+  margin-top: 5px;
 }
 #modalClose {
   all: unset;
@@ -134,12 +166,12 @@ body {
   color: var(--caramel);
   cursor: pointer;
 }
-#addTaskButton {
+#addTaskBar {
   display: flex;
-  align-items: center;
+  align-items: top;
   gap: 10px;
 }
-#addTaskButton svg {
+#addTaskBar svg {
   color: var(--light-green);
   font-size: 40px;
 }
@@ -152,7 +184,7 @@ svg:hover {
 #newTaskForm {
   font-family: sans-serif;
   overflow: hidden;
-  transform-origin: left;
+  transform-origin: top left;
   background: var(--bleu-de-france);
   color: white;
   padding: 5px 20px;
@@ -165,6 +197,7 @@ svg:hover {
   gap: 20px;
   transition: all 0.2s;
 }
+
 #newTaskForm button[type="submit"] {
   all: unset;
   border: 1px solid white;
@@ -176,21 +209,49 @@ svg:hover {
   color: var(--bleu-de-france);
 }
 #userInput,
-#time {
+#time,
+#detailsInput {
   font-size: 1.2rem;
   font-family: sans-serif;
   border: none;
   padding: 4px 8px;
   border-radius: 0.5rem;
   margin-left: 10px;
+  resize: none;
+}
+
+#eventDetails {
+  flex: 100%;
+}
+#detailsInput {
+  width: calc(100%);
+  margin: 0;
+}
+
+.seeMore:hover,
+.deleteItem:hover,
+.editItem:hover {
+  color: var(--caramel);
+}
+
+.detailsDisplay {
+  border-bottom: 1px solid var(--ultra-violet);
+  border-left: 1px solid var(--ultra-violet);
+  border-right: 1px solid var(--ultra-violet);
+  margin: -10px 0 5px;
+  padding: 20px 10px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 #todayBtn {
   position: fixed;
   bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background: var(--bleu-de-france);
   border: none;
-  padding: 5px 15px;
+  padding: 10px 15px;
   border-radius: 0.5rem;
   color: white;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
@@ -210,5 +271,26 @@ svg:hover {
   }
   .tinyTaskCount {
     display: grid;
+  }
+  .bigListItem {
+    font-size: small;
+  }
+  .bigListItemTools {
+    gap: 10px;
+  }
+  #newTaskForm {
+    justify-content: flex-start;
+  }
+  #newTaskForm label {
+    flex: 100%;
+  }
+  #userInput {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  #todayList {
+    display: none;
   }
 }
